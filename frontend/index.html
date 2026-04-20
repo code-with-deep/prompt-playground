@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Engineering Playground</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="landing-wrapper">
+    <nav class="landing-nav">
+        <div class="landing-brand"><i class="fas fa-flask"></i> PromptLab</div>
+        <div class="landing-links">
+            <a href="#hero">Home</a>
+            <a href="#features">Features</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="btn btn-primary" id="launchNavBtn">Launch App <i class="fas fa-arrow-right"></i></button>
+    </nav>
+    <section id="hero" class="landing-section hero-section">
+        <div class="hero-content">
+            <h1>Engineering <span>Intelligence</span>.</h1>
+            <p>The ultimate prompt engineering playground with Side-by-Side comparison, dynamic variable sweeps, and comprehensive execution tracking powered by Groq LPU inference.</p>
+            <button class="btn btn-hero" id="launchHeroBtn">Start Engineering</button>
+        </div>
+        <div class="hero-graphic">
+            <div class="glass-mockup">
+                <div class="mockup-header"><i class="fas fa-terminal"></i> Playgrounds</div>
+                <div class="mockup-body">system: "You are a logical assistant."<br><br>> User: Process variable {x}</div>
+            </div>
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </div>
+    </section>
+    <section id="features" class="landing-section">
+        <div class="section-header">
+            <h2>Features & Workflow</h2>
+            <p>A structured approach to mastering AI outputs.</p>
+        </div>
+        <div class="workflow-chart glass">
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fas fa-keyboard"></i></div>
+                <h4>Design</h4>
+                <p>Set personas and prompt variables</p>
+            </div>
+            <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fas fa-cogs"></i></div>
+                <h4>Configure</h4>
+                <p>Adjust Temperature & Top-P logic</p>
+            </div>
+            <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fas fa-bolt"></i></div>
+                <h4>Generate</h4>
+                <p>Instantaneous Groq LPU inference</p>
+            </div>
+            <div class="flow-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="flow-step">
+                <div class="flow-icon"><i class="fas fa-chart-line"></i></div>
+                <h4>Iterate</h4>
+                <p>Compare outputs side-by-side</p>
+            </div>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-columns"></i>
+                <h3>Compare Logic</h3>
+                <p>Run two completely different prompts or variable states side-by-side to A/B test logic instantaneously.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sliders-h"></i>
+                <h3>Parameter Sweeps</h3>
+                <p>Test massive permutations of temperatures, top_p, and penalties at once to find the perfect generation parameters.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book"></i>
+                <h3>Prompt Library</h3>
+                <p>Store your specialized contexts, zero-shot rules, and meta-prompts alongside their ideal configuration profiles.</p>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials" class="landing-section">
+        <div class="section-header">
+            <h2>Testimonials</h2>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card glass">
+                <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"PromptLab's Sweep functionality allowed me to dial in exact temperature parameters for strict code formatting."</p>
+                <div class="t-author-block">
+                    <img src="img/avatar_sarah.png" alt="Sarah J." class="t-avatar">
+                    <div class="t-author-info">
+                        <div class="t-author-name">Sarah J.</div>
+                        <div class="t-author-role">ML Engineer</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                <p>"The side-by-side comparison with built-in token pricing saves us critical iterations."</p>
+                <div class="t-author-block">
+                    <img src="img/avatar_james.png" alt="James R." class="t-avatar">
+                    <div class="t-author-info">
+                        <div class="t-author-name">James R.</div>
+                        <div class="t-author-role">Product Manager</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card glass">
+                <div class="t-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                <p>"Groq inference combined with structural template saving makes testing LLM limits a breeze."</p>
+                <div class="t-author-block">
+                    <img src="img/avatar_emily.png" alt="Emily C." class="t-avatar">
+                    <div class="t-author-info">
+                        <div class="t-author-name">Emily C.</div>
+                        <div class="t-author-role">DevOps</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="landing-section">
+        <div class="section-header">
+            <h2>Contact Us</h2>
+        </div>
+        <form class="contact-form glass" id="landingContactForm">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" required class="input-styled" placeholder="Jane Doe">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" required class="input-styled" placeholder="jane@example.com">
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea required class="input-styled" rows="4" placeholder="How can we help?"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+        </form>
+    </section>
+    <footer class="landing-footer">
+        PromptLab &copy; 2026. Data logic perfected.
+    </footer>
+</div>
+<div id="app-wrapper" style="display: none;">
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <i class="fas fa-flask"></i>
+        <span>PromptLab</span>
+    </div>
+    <ul class="nav-links">
+        <li>
+            <a href="#" class="nav-item active" data-screen="playground">
+                <i class="fas fa-terminal"></i>
+                <span>Playground</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-item" data-screen="comparison">
+                <i class="fas fa-columns"></i>
+                <span>Compare</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-item" data-screen="sweep">
+                <i class="fas fa-sliders-h"></i>
+                <span>Param Sweep</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-item" data-screen="library">
+                <i class="fas fa-book"></i>
+                <span>Library</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-item" data-screen="history">
+                <i class="fas fa-history"></i>
+                <span>History</span>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-footer">
+        <a href="#" class="nav-item return-home-btn" id="navReturnHome" style="color: var(--accent-red); margin-bottom: 12px; font-weight: 600;">
+            <i class="fas fa-home"></i>
+            <span>Back to Home</span>
+        </a>
+        <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+</nav>
+<main class="main-content">
+    <div class="screen active" id="screen-playground">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <h2 class="screen-title">
+                    <i class="fas fa-terminal"></i> Playground
+                </h2>
+                <select id="techniqueSelector" class="select-styled">
+                    <option value="zero-shot">Zero-Shot</option>
+                    <option value="few-shot">Few-Shot</option>
+                    <option value="chain-of-thought">Chain-of-Thought</option>
+                    <option value="role-based">Role-Based</option>
+                    <option value="output-format">Output Format Control</option>
+                    <option value="negative-prompting">Negative Prompting</option>
+                    <option value="self-consistency">Self-Consistency</option>
+                </select>
+                <div class="technique-badge" id="techniqueBadge">
+                    Direct instruction with no examples
+                </div>
+            </div>
+            <div class="toolbar-right">
+                <select id="providerSelector" class="select-styled" style="display:none;">
+                    <option value="groq" selected>Groq Llama3</option>
+                </select>
+                <span class="token-counter" id="tokenCounter">
+                    <i class="fas fa-coins"></i> 0 tokens
+                </span>
+                <button class="btn btn-save" id="savePromptBtn">
+                    <i class="fas fa-save"></i> Save
+                </button>
+                <button class="btn btn-primary" id="runBtn">
+                    <i class="fas fa-play"></i> Run
+                    <span class="shortcut">Ctrl+↵</span>
+                </button>
+            </div>
+        </div>
+        <div class="playground-layout">
+            <div class="editor-panel">
+                <div class="editor-section">
+                    <label class="editor-label">
+                        <i class="fas fa-robot"></i> System Prompt
+                        <span class="label-hint">Define AI persona and behavior</span>
+                    </label>
+                    <textarea 
+                        id="systemPrompt" 
+                        class="prompt-textarea system-prompt"
+                        placeholder="You are a helpful assistant..."
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div class="editor-section flex-grow">
+                    <label class="editor-label">
+                        <i class="fas fa-user"></i> User Prompt
+                        <span class="label-hint">Your task or question</span>
+                    </label>
+                    <textarea 
+                        id="userPrompt" 
+                        class="prompt-textarea user-prompt"
+                        placeholder="Ask anything... Use {{variable}} for dynamic inputs"
+                        rows="10"
+                    ></textarea>
+                    <div class="variables-panel" id="variablesPanel" style="display:none;">
+                        <h4 class="variables-title">
+                            <i class="fas fa-code"></i> Variables
+                        </h4>
+                        <div id="variableInputs"></div>
+                    </div>
+                </div>
+                <div class="self-consistency-panel" id="selfConsistencyPanel" style="display:none;">
+                    <label class="editor-label">
+                        <i class="fas fa-redo"></i> Run Count
+                    </label>
+                    <input type="number" id="runCount" value="3" min="2" max="5" class="input-styled">
+                </div>
+                <div class="params-panel">
+                    <h4 class="params-title">
+                        <i class="fas fa-sliders-h"></i> Parameters
+                    </h4>
+                    <div class="param-group">
+                        <label>Temperature <span class="param-value" id="tempValue">0.7</span></label>
+                        <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" class="slider">
+                        <span class="param-hint" id="tempHint">Balanced creativity</span>
+                    </div>
+                    <div class="param-group">
+                        <label>Top-P <span class="param-value" id="topPValue">0.9</span></label>
+                        <input type="range" id="topP" min="0" max="1" step="0.05" value="0.9" class="slider">
+                    </div>
+                    <div class="param-group">
+                        <label>Max Tokens <span class="param-value" id="maxTokensValue">1024</span></label>
+                        <input type="range" id="maxTokens" min="50" max="4096" step="50" value="1024" class="slider">
+                    </div>
+                    <div class="param-group">
+                        <label>Freq. Penalty <span class="param-value" id="freqPenValue">0.0</span></label>
+                        <input type="range" id="freqPenalty" min="0" max="2" step="0.1" value="0" class="slider">
+                    </div>
+                    <div class="param-group">
+                        <label>Presence Penalty <span class="param-value" id="presPenValue">0.0</span></label>
+                        <input type="range" id="presPenalty" min="0" max="2" step="0.1" value="0" class="slider">
+                    </div>
+                    <div class="param-group">
+                        <label>Stop Sequences</label>
+                        <input type="text" id="stopSequences" placeholder="e.g., END, STOP" class="input-styled">
+                    </div>
+                </div>
+            </div>
+            <div class="output-panel">
+                <div class="output-header">
+                    <h3>
+                        <i class="fas fa-comment-dots"></i> Output
+                    </h3>
+                    <div class="metrics-bar" id="metricsBar" style="display:none;">
+                        <span class="metric">
+                            <i class="fas fa-clock"></i>
+                            <span id="latencyDisplay">--</span>ms
+                        </span>
+                        <span class="metric">
+                            <i class="fas fa-coins"></i>
+                            <span id="tokensDisplay">--</span> tokens
+                        </span>
+                        <span class="metric">
+                            <i class="fas fa-dollar-sign"></i>
+                            $<span id="costDisplay">--</span>
+                        </span>
+                    </div>
+                    <div class="output-actions">
+                        <button class="btn btn-sm" id="copyOutputBtn" title="Copy output">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="btn btn-sm" id="clearOutputBtn" title="Clear">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="loading-state" id="loadingState" style="display:none;">
+                    <div class="loading-spinner"></div>
+                    <p>Generating response...</p>
+                </div>
+                <div class="output-content" id="outputContent">
+                    <div class="output-placeholder">
+                        <i class="fas fa-magic"></i>
+                        <p>Your AI output will appear here</p>
+                        <p class="hint">Write a prompt and click Run</p>
+                    </div>
+                </div>
+                <div class="rating-panel" id="ratingPanel" style="display:none;">
+                    <span>Rate this output:</span>
+                    <div class="star-rating" id="starRating">
+                        <i class="fas fa-star" data-rating="1"></i>
+                        <i class="fas fa-star" data-rating="2"></i>
+                        <i class="fas fa-star" data-rating="3"></i>
+                        <i class="fas fa-star" data-rating="4"></i>
+                        <i class="fas fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="screen" id="screen-comparison">
+        <div class="toolbar">
+            <h2 class="screen-title">
+                <i class="fas fa-columns"></i> Side-by-Side Comparison
+            </h2>
+            <button class="btn btn-primary" id="runBothBtn">
+                <i class="fas fa-play"></i> Run Both
+            </button>
+        </div>
+        <div class="comparison-layout">
+            <div class="comparison-side">
+                <h3 class="comparison-label label-a">
+                    <i class="fas fa-circle"></i> Prompt A
+                </h3>
+                <textarea id="compareSystemA" class="prompt-textarea" placeholder="System prompt A..." rows="2"></textarea>
+                <textarea id="comparePromptA" class="prompt-textarea" placeholder="User prompt A..." rows="6"></textarea>
+                <div class="compare-params">
+                    <label>Temperature A: <span id="tempAValue">0.7</span></label>
+                    <input type="range" id="tempA" min="0" max="2" step="0.1" value="0.7" class="slider">
+                    <label>Technique:</label>
+                    <select id="techniqueA" class="select-styled">
+                        <option value="zero-shot">Zero-Shot</option>
+                        <option value="few-shot">Few-Shot</option>
+                        <option value="chain-of-thought">Chain-of-Thought</option>
+                    </select>
+                </div>
+                <div class="compare-output" id="compareOutputA">
+                    <div class="output-placeholder">Output A will appear here</div>
+                </div>
+                <div class="compare-metrics" id="compareMetricsA"></div>
+            </div>
+            <div class="comparison-side">
+                <h3 class="comparison-label label-b">
+                    <i class="fas fa-circle"></i> Prompt B
+                </h3>
+                <textarea id="compareSystemB" class="prompt-textarea" placeholder="System prompt B..." rows="2"></textarea>
+                <textarea id="comparePromptB" class="prompt-textarea" placeholder="User prompt B..." rows="6"></textarea>
+                <div class="compare-params">
+                    <label>Temperature B: <span id="tempBValue">0.7</span></label>
+                    <input type="range" id="tempB" min="0" max="2" step="0.1" value="0.7" class="slider">
+                    <label>Technique:</label>
+                    <select id="techniqueB" class="select-styled">
+                        <option value="zero-shot">Zero-Shot</option>
+                        <option value="few-shot">Few-Shot</option>
+                        <option value="chain-of-thought">Chain-of-Thought</option>
+                    </select>
+                </div>
+                <div class="compare-output" id="compareOutputB">
+                    <div class="output-placeholder">Output B will appear here</div>
+                </div>
+                <div class="compare-metrics" id="compareMetricsB"></div>
+            </div>
+        </div>
+    </div>
+    <div class="screen" id="screen-sweep">
+        <div class="toolbar">
+            <h2 class="screen-title">
+                <i class="fas fa-sliders-h"></i> Parameter Sweep
+            </h2>
+            <button class="btn btn-primary" id="runSweepBtn">
+                <i class="fas fa-play"></i> Run Sweep
+            </button>
+        </div>
+        <div class="sweep-config">
+            <textarea id="sweepPrompt" class="prompt-textarea" 
+                      placeholder="Enter prompt to test across parameter values..." rows="4"></textarea>
+            <div class="sweep-controls">
+                <div class="control-group">
+                    <label>Sweep Parameter:</label>
+                    <select id="sweepParam" class="select-styled">
+                        <option value="temperature">Temperature</option>
+                        <option value="top_p">Top-P</option>
+                        <option value="max_tokens">Max Tokens</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Values (comma-separated):</label>
+                    <input type="text" id="sweepValues" value="0.0, 0.3, 0.7, 1.0, 1.5" class="input-styled">
+                </div>
+            </div>
+        </div>
+        <div class="sweep-grid" id="sweepGrid"></div>
+    </div>
+    <div class="screen" id="screen-library">
+        <div class="toolbar">
+            <h2 class="screen-title">
+                <i class="fas fa-book"></i> Prompt Library
+            </h2>
+            <div class="toolbar-right">
+                <button class="btn" id="exportPromptsBtn">
+                    <i class="fas fa-download"></i> Export
+                </button>
+                <label class="btn" for="importFile">
+                    <i class="fas fa-upload"></i> Import
+                </label>
+                <input type="file" id="importFile" accept=".json" style="display:none;">
+            </div>
+        </div>
+        <div class="library-controls">
+            <input type="text" id="librarySearch" placeholder="Search prompts..." class="search-input">
+            <select id="categoryFilter" class="select-styled">
+                <option value="">All Categories</option>
+                <option value="Content Writing">Content Writing</option>
+                <option value="Code & Technical">Code & Technical</option>
+                <option value="Analysis & Reasoning">Analysis & Reasoning</option>
+                <option value="Summarization & Extraction">Summarization & Extraction</option>
+                <option value="Translation & Language">Translation & Language</option>
+            </select>
+        </div>
+        <div class="library-grid" id="libraryGrid">
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+    <div class="screen" id="screen-history">
+        <div class="toolbar">
+            <h2 class="screen-title">
+                <i class="fas fa-history"></i> Execution History
+            </h2>
+        </div>
+        <div class="history-filters">
+            <select id="techniqueFilter" class="select-styled">
+                <option value="">All Techniques</option>
+                <option value="zero-shot">Zero-Shot</option>
+                <option value="few-shot">Few-Shot</option>
+                <option value="chain-of-thought">Chain-of-Thought</option>
+            </select>
+        </div>
+        <div class="history-list" id="historyList">
+            <div class="loading-state">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<div class="modal-overlay" id="saveModal" style="display:none;">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Save Prompt to Library</h3>
+            <button class="modal-close" id="closeSaveModal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Name *</label>
+                <input type="text" id="savePromptName" class="input-styled" placeholder="My Awesome Prompt">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="savePromptDesc" class="input-styled" rows="2" 
+                          placeholder="What does this prompt do?"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="savePromptCategory" class="select-styled">
+                    <option>Content Writing</option>
+                    <option>Code & Technical</option>
+                    <option>Analysis & Reasoning</option>
+                    <option>Summarization & Extraction</option>
+                    <option>Translation & Language</option>
+                    <option>General</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tags (comma-separated)</label>
+                <input type="text" id="savePromptTags" class="input-styled" 
+                       placeholder="email, marketing, formal">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" id="cancelSave">Cancel</button>
+            <button class="btn btn-primary" id="confirmSave">
+                <i class="fas fa-save"></i> Save Prompt
+            </button>
+        </div>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+</div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/output-parser.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/comparison.js"></script>
+<script src="js/library.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
