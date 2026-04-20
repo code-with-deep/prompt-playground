@@ -6,68 +6,61 @@ from routes.generate import generate_bp
 from routes.templates import templates_bp
 from routes.prompts import prompts_bp
 from routes.history import history_bp
+import os
+
 
 def create_app():
-    """
-    Application Factory Pattern:
-    Instead of creating the app at module level, we wrap it in a function.
-    This makes testing easier and avoids circular imports.
-    """
     app = Flask(__name__)
     app.config.from_object(Config)
+
     
-    # CORS configuration - allows both local and deployed frontend
-    CORS(app, resources={
-        r"/api/*": {
-            "origins": [
-                "http://localhost:8080",
-                "http://127.0.0.1:8080",
-                "http://localhost:3000",
-                "https://*.onrender.com",
-                "null"
-            ],
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"]
-        }
-    })
-    
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    # Initialize DB
     db.init_app(app)
-    
+
     # Register blueprints
     app.register_blueprint(generate_bp, url_prefix='/api')
     app.register_blueprint(templates_bp, url_prefix='/api')
     app.register_blueprint(prompts_bp, url_prefix='/api')
     app.register_blueprint(history_bp, url_prefix='/api')
+
     
-    # Create tables and seed data
     with app.app_context():
-        db.create_all()
-        _seed_templates()
-    
-    # Health check endpoint
+        if os.getenv("FLASK_ENV") == "development":
+            db.create_all()
+            _seed_templates()
+
+    # Health check route
     @app.route('/api/health')
     def health():
-        return {'status': 'ok', 'message': 'Prompt Playground API is running'}, 200
-    
+        return {'status': 'ok', 'message': 'API running'}, 200
+
+    # Root route
+    @app.route('/')
+    def home():
+        return "Backend is running 🚀"
+
     return app
 
 
 def _seed_templates():
-    """Load built-in templates from JSON file into database if not already there."""
     import json
-    import os
     from models.database import PromptTemplate
-    
+
     if PromptTemplate.query.count() > 0:
         return
-    
+
     template_file = os.path.join(os.path.dirname(__file__), 'data', 'templates.json')
-    if not os.path.exists(template_file):
-        return
+
     
+    if not os.path.exists(template_file):
+        print("⚠️ templates.json not found, skipping seeding")
+        return
+
     with open(template_file, 'r') as f:
         templates = json.load(f)
-    
+
     for t in templates:
         template = PromptTemplate(
             name=t['name'],
@@ -83,15 +76,16 @@ def _seed_templates():
             is_builtin=True
         )
         db.session.add(template)
-    
+
     db.session.commit()
     print(f"✅ Seeded {len(templates)} built-in templates")
 
 
-# Create app at module level so Gunicorn can find it
+# ✅ Required for Gunicorn
 app = create_app()
 
+
+# Run locally
 if __name__ == '__main__':
-    import os
     port = int(os.getenv('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=Config.DEBUG)
