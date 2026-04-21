@@ -9,18 +9,16 @@ services:
       - key: FLASK_ENV
         value: production
       - key: GROQ_API_KEY
-        sync: false          # Set this manually in the Render dashboard
+        sync: false         
       - key: SECRET_KEY
-        generateValue: true  # Render auto-generates a secure key
-      - key: DATABASE_URL
-        sync: false          # Set this to your PostgreSQL URL in the Render dashboard
+        generateValue: true 
     autoDeploy: true
 
   - type: web
     name: prompt-playground-frontend
     runtime: static
     staticPublishPath: frontend
-    buildCommand: ""         # No build step needed for vanilla HTML/JS/CSS
+    buildCommand: ""         
     routes:
       - type: rewrite
         source: /*
