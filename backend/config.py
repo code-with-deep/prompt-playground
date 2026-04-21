@@ -9,12 +9,8 @@ class Config:
     DEBUG = os.getenv('FLASK_ENV') == 'development'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
-    # Database: Handle both SQLite (local) and PostgreSQL (production)
-    db_url = os.getenv('DATABASE_URL', 'sqlite:///playground.db')
-    if db_url and db_url.startswith('postgres://'):
-        # Render uses postgres://, but SQLAlchemy needs postgresql://
-        db_url = db_url.replace('postgres://', 'postgresql://', 1)
-    SQLALCHEMY_DATABASE_URI = db_url
+    # Database: Use SQLite (compatible with Python 3.14)
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///playground.db'
     
     # LLM API Key (Groq only)
     GROQ_API_KEY = os.getenv('GROQ_API_KEY', '')
