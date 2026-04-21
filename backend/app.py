@@ -27,8 +27,8 @@ def create_app():
 
     
     with app.app_context():
+        db.create_all()
         if os.getenv("FLASK_ENV") == "development":
-            db.create_all()
             _seed_templates()
 
     # Health check route
