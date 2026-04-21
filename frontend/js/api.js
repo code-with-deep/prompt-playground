@@ -1,6 +1,6 @@
-const API_BASE = window.location.hostname === 'prompt-playground-s7fz.onrender.com'
-    ? 'https://prompt-playground-s7fz.onrender.com/api'
-    : '/api';
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:5000/api'
+    : 'https://prompt-playground-s7fz.onrender.com/api';
 async function apiFetch(endpoint, options = {}) {
     const response = await fetch(`${API_BASE}${endpoint}`, {
         headers: { 'Content-Type': 'application/json' },
