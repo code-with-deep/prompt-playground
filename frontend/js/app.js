@@ -1,4 +1,4 @@
-let currentHistoryId = null;  // Track last execution for rating
+let currentHistoryId = null;  
 function initNavigation() {
     document.querySelectorAll('.nav-item').forEach(link => {
         link.addEventListener('click', (e) => {
@@ -195,7 +195,7 @@ function initLandingPage() {
 document.addEventListener('DOMContentLoaded', () => {
     initLandingPage();
     initNavigation();
-    initEditor();          // from editor.js
+    initEditor();          
     initSaveModal();
     initRating();
     initTheme();
