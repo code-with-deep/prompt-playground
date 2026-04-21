@@ -2,6 +2,6 @@ flask==3.0.2
 flask-cors==4.0.0
 flask-sqlalchemy==3.1.1
 python-dotenv==1.0.1
-groq==0.9.0
+groq==0.10.0
 jsonschema==4.21.1
 gunicorn==21.2.0
