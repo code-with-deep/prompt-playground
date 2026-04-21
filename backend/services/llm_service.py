@@ -18,7 +18,7 @@ def call_llm(system_prompt: str, user_prompt: str, params: dict) -> dict:
     response = client.chat.completions.create(
         model=model_name,
         messages=messages,
-        temperature=float(params.get('temperature', 0.7)),
+        temperature=float(params.get('temperature', 0.3)),
         max_tokens=int(params.get('max_tokens', 1024)),
         top_p=float(params.get('top_p', 0.9)),
         frequency_penalty=float(params.get('frequency_penalty', 0.0)),

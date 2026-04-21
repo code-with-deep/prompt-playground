@@ -2,8 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
 db = SQLAlchemy()
-from .execution_history import ExecutionHistory
-from .prompt_template import PromptTemplate
 class PromptTemplate(db.Model):
     """
     Stores both built-in templates (is_builtin=True) and user-saved prompts.

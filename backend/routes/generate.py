@@ -36,7 +36,7 @@ def generate():
         system_prompt: "You are a helpful assistant",
         user_prompt: "Explain recursion",
         provider: "gemini",
-        temperature: 0.7,
+        temperature: 0.3,
         max_tokens: 1024,
         top_p: 0.9,
         technique: "chain-of-thought"
