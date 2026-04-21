@@ -28,8 +28,7 @@ def create_app():
     
     with app.app_context():
         db.create_all()
-        if os.getenv("FLASK_ENV") == "development":
-            _seed_templates()
+        _seed_templates()  # Always seed — count check inside prevents duplicates
 
     # Health check route
     @app.route('/api/health')

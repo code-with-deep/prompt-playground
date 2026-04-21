@@ -41,3 +41,13 @@ def rate_execution(history_id):
     entry.rating = int(rating)
     db.session.commit()
     return jsonify({'message': 'Rating saved'}), 200
+
+@history_bp.route('/history/<int:history_id>', methods=['GET'])
+def get_history_entry(history_id):
+    """
+    Get a single history entry by ID.
+    USE CASE: Re-run from history — fetch the exact entry to load
+    its prompts back into the playground without re-fetching the entire list.
+    """
+    entry = ExecutionHistory.query.get_or_404(history_id)
+    return jsonify(entry.to_dict()), 200

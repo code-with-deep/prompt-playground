@@ -51,3 +51,6 @@ async function rateExecution(historyId, rating) {
         body: JSON.stringify({ rating })
     });
 }
+async function getHistoryEntry(historyId) {
+    return apiFetch(`/history/${historyId}`);
+}

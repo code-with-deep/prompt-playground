@@ -4,9 +4,11 @@ __pycache__/
 venv/
 .env
 
-# Database
+# Database — never commit SQLite files or Flask instance folders
 *.db
 *.sqlite3
+instance/
+backend/instance/
 
 # Node (if any)
 node_modules/

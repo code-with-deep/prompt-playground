@@ -122,10 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    const sweepBtn = document.getElementById('runSweepBtn');
-    if (sweepBtn) {
-        sweepBtn.addEventListener('click', runParameterSweep);
-    }
+    // NOTE: runSweepBtn is handled exclusively by sweep.js — no duplicate listener here
 });
 async function runParameterSweep() {
     const promptText = document.getElementById('sweepPrompt')?.value?.trim();
@@ -212,14 +209,13 @@ async function loadHistory() {
 }
 async function reRunFromHistory(historyId) {
     try {
-        const result = await apiFetch(`/history`);
-        const entry = result.history.find(h => h.id === historyId);
-        if (!entry) return;
+        // Fetch the specific entry by ID — avoids missing entries beyond page 1
+        const entry = await getHistoryEntry(historyId);
         document.querySelector('[data-screen="playground"]').click();
         document.getElementById('systemPrompt').value = entry.system_prompt || '';
         document.getElementById('userPrompt').value = entry.user_prompt_full || entry.user_prompt || '';
         if (typeof showToast !== 'undefined') showToast('Loaded into playground', 'success');
     } catch (e) {
-        if (typeof showToast !== 'undefined') showToast('Failed to load', 'error');
+        if (typeof showToast !== 'undefined') showToast('Failed to load entry', 'error');
     }
 }
