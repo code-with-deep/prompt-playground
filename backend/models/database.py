@@ -1,7 +1,38 @@
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
+
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import check_password_hash, generate_password_hash
+
 db = SQLAlchemy()
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False, index=True)
+    password_hash = db.Column(db.String(255), nullable=False)
+    auth_token = db.Column(db.String(255), unique=True, nullable=True, index=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'created_at': self.created_at.isoformat()
+        }
+
+
 class PromptTemplate(db.Model):
     """
     Stores both built-in templates (is_builtin=True) and user-saved prompts.
@@ -24,8 +55,10 @@ class PromptTemplate(db.Model):
     is_builtin = db.Column(db.Boolean, default=False)  # True = pre-loaded, False = user-created
     version = db.Column(db.Integer, default=1)
     parent_id = db.Column(db.Integer, db.ForeignKey('prompt_templates.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     def to_dict(self):
         """Convert model to dictionary for JSON API responses."""
         return {
@@ -44,9 +77,12 @@ class PromptTemplate(db.Model):
             'is_builtin': self.is_builtin,
             'version': self.version,
             'parent_id': self.parent_id,
+            'user_id': self.user_id,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
         }
+
+
 class ExecutionHistory(db.Model):
     """
     Records every LLM call made through the playground.
@@ -74,7 +110,9 @@ class ExecutionHistory(db.Model):
     latency_ms = db.Column(db.Integer, default=0)  # Response time in milliseconds
     estimated_cost = db.Column(db.Float, default=0.0)  # Cost in USD
     rating = db.Column(db.Integer, nullable=True)  # 1-5 stars
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -93,5 +131,6 @@ class ExecutionHistory(db.Model):
             'latency_ms': self.latency_ms,
             'estimated_cost': self.estimated_cost,
             'rating': self.rating,
+            'user_id': self.user_id,
             'created_at': self.created_at.isoformat()
         }

@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
+from sqlalchemy import inspect, text
+
 from models.database import db
 from config import Config
+from routes.auth import auth_bp
 from routes.generate import generate_bp
 from routes.templates import templates_bp
 from routes.prompts import prompts_bp
@@ -20,6 +23,7 @@ def create_app():
     db.init_app(app)
 
     # Register blueprints
+    app.register_blueprint(auth_bp, url_prefix='/api')
     app.register_blueprint(generate_bp, url_prefix='/api')
     app.register_blueprint(templates_bp, url_prefix='/api')
     app.register_blueprint(prompts_bp, url_prefix='/api')
@@ -28,6 +32,7 @@ def create_app():
     
     with app.app_context():
         db.create_all()
+        _run_schema_updates()
         _seed_templates()  # Always seed — count check inside prevents duplicates
 
     # Health check route
@@ -41,6 +46,34 @@ def create_app():
         return "Backend is running 🚀"
 
     return app
+
+
+def _run_schema_updates():
+    inspector = inspect(db.engine)
+    tables = set(inspector.get_table_names())
+
+    if 'users' not in tables:
+        from models.database import User
+        User.__table__.create(bind=db.engine)
+
+    column_updates = {
+        'prompt_templates': {
+            'user_id': 'ALTER TABLE prompt_templates ADD COLUMN user_id INTEGER'
+        },
+        'execution_history': {
+            'user_id': 'ALTER TABLE execution_history ADD COLUMN user_id INTEGER'
+        }
+    }
+
+    for table_name, updates in column_updates.items():
+        if table_name not in tables:
+            continue
+
+        existing_columns = {column['name'] for column in inspector.get_columns(table_name)}
+        for column_name, ddl in updates.items():
+            if column_name not in existing_columns:
+                db.session.execute(text(ddl))
+                db.session.commit()
 
 
 def _seed_templates():

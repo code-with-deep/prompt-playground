@@ -103,7 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('exportPromptsBtn');
     if (exportBtn) {
         exportBtn.addEventListener('click', async () => {
-            window.location.href = `${API_BASE}/export`;
+            try {
+                const response = await fetch(`${API_BASE}/export`, {
+                    headers: {
+                        Authorization: `Bearer ${getStoredAuthToken()}`
+                    }
+                });
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Export failed');
+                }
+                const blob = await response.blob();
+                const downloadUrl = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = 'my_prompts.json';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(downloadUrl);
+                if (typeof showToast !== 'undefined') showToast('Prompts exported', 'success');
+            } catch (error) {
+                if (typeof showToast !== 'undefined') showToast('Export failed: ' + error.message, 'error');
+            }
         });
     }
     const importFile = document.getElementById('importFile');

@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div id="toast"></div>
 <div id="landing-wrapper">
     <nav class="landing-nav">
         <div class="landing-brand"><i class="fas fa-flask"></i> PromptLab</div>
@@ -20,13 +19,21 @@
             <a href="#testimonials">Testimonials</a>
             <a href="#contact">Contact</a>
         </div>
-        <button class="btn btn-primary" id="launchNavBtn">Launch App <i class="fas fa-arrow-right"></i></button>
+        <div class="landing-actions">
+            <div id="landingUserSection" style="display:none; align-items: center; gap: 1rem;">
+                <span id="landingUserName" style="color: var(--text-color); font-weight: 500;"></span>
+                <button class="btn btn-ghost-hero" id="landingLogoutBtn">Logout</button>
+            </div>
+            <button class="btn btn-primary" id="authNavBtn">Login</button>
+        </div>
     </nav>
     <section id="hero" class="landing-section hero-section">
         <div class="hero-content">
             <h1>Engineering <span>Intelligence</span>.</h1>
             <p>The ultimate prompt engineering playground with Side-by-Side comparison, dynamic variable sweeps, and comprehensive execution tracking powered by Groq LPU inference.</p>
-            <button class="btn btn-hero" id="launchHeroBtn">Start Engineering</button>
+            <div class="hero-actions">
+                <button class="btn btn-hero" id="launchHeroBtn">Start Engineering</button>
+            </div>
         </div>
         <div class="hero-graphic">
             <div class="glass-mockup">
@@ -149,6 +156,65 @@
         PromptLab &copy; 2026. Data logic perfected.
     </footer>
 </div>
+<div id="auth-wrapper" style="display: none;">
+    <div class="auth-shell">
+        <div class="auth-showcase">
+            <div class="auth-brand"><i class="fas fa-flask"></i> PromptLab</div>
+            <h2>Secure your prompt workspace.</h2>
+            <p>Sign in to save your prompts, keep your history, and jump straight into the full PromptLab workflow without changing the current playground experience.</p>
+            <div class="auth-feature-list">
+                <div class="auth-feature-item"><i class="fas fa-lock"></i> Private prompt library per user</div>
+                <div class="auth-feature-item"><i class="fas fa-history"></i> Personal execution history</div>
+                <div class="auth-feature-item"><i class="fas fa-bolt"></i> Instant access to all existing tools after login</div>
+            </div>
+            <button class="btn" id="authBackHomeBtn"><i class="fas fa-arrow-left"></i> Back to Home</button>
+        </div>
+        <div class="auth-panel glass">
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-auth-mode="login">Login</button>
+                <button class="auth-tab" data-auth-mode="signup">Sign Up</button>
+            </div>
+            <div class="auth-form-block active" id="loginFormBlock">
+                <div class="auth-copy">
+                    <h3>Welcome back</h3>
+                    <p>Continue to your prompt engineering workspace.</p>
+                </div>
+                <form id="loginForm" class="auth-form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" class="input-styled" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" class="input-styled" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary auth-submit-btn">Login <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+            <div class="auth-form-block" id="signupFormBlock">
+                <div class="auth-copy">
+                    <h3>Create your account</h3>
+                    <p>Set up your space and access every feature after signup.</p>
+                </div>
+                <form id="signupForm" class="auth-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="signupName" class="input-styled" placeholder="Jane Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" class="input-styled" placeholder="jane@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" class="input-styled" placeholder="At least 6 characters" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary auth-submit-btn">Create Account <i class="fas fa-user-plus"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="app-wrapper" style="display: none;">
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-brand">
@@ -188,6 +254,16 @@
         </li>
     </ul>
     <div class="sidebar-footer">
+        <div class="sidebar-user-card" id="sidebarUserCard" style="display:none;">
+            <div class="sidebar-user-avatar"><i class="fas fa-user"></i></div>
+            <div class="sidebar-user-meta">
+                <span id="sidebarUserName">PromptLab User</span>
+                <small id="sidebarUserEmail">user@example.com</small>
+            </div>
+        </div>
+        <button class="btn sidebar-logout-btn" id="logoutBtn" style="display:none;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
         <a href="#" class="nav-item return-home-btn" id="navReturnHome" style="color: var(--accent-red); margin-bottom: 12px; font-weight: 600;">
             <i class="fas fa-home"></i>
             <span>Back to Home</span>
@@ -229,7 +305,7 @@
                 </button>
                 <button class="btn btn-primary" id="runBtn">
                     <i class="fas fa-play"></i> Run
-                    <span class="shortcut">Ctrl+↵</span>
+                    <span class="shortcut">Ctrl+Enter</span>
                 </button>
             </div>
         </div>
@@ -533,8 +609,8 @@
         </div>
     </div>
 </div>
+</div>
 <div class="toast" id="toast"></div>
-</div> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
@@ -545,6 +621,7 @@
 <script src="js/comparison.js"></script>
 <script src="js/library.js"></script>
 <script src="js/sweep.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
